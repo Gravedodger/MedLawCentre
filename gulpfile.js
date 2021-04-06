@@ -1,6 +1,5 @@
 const gulp = require ('gulp');
 const sass = require ('gulp-sass');
-const scss = require ('gulp-scss');
 const jshint = require('jshint');
 const autoprefixer = require ('gulp-autoprefixer');
 const clean = require ('gulp-clean');
@@ -19,27 +18,48 @@ const patch = {
   js: './src/js/**/*.js'
 };
 
-const style = () =>
-    gulp.src (patch.css).
-        pipe(scss()).
-        pipe(cleanCSS()).
-        pipe(gulp.dest ('./dist/css'));
+function styles() {
+  return gulp.src(patch.css).
+      pipe(concat('main.css')).
+      pipe(sass()).
+      pipe(autoprefixer()).
+      pipe(cleanCSS({level: 2})).
+      pipe(gulp.dest('dist/')).
+      pipe(browserSync.stream());
+}
 
-const js = () =>
-    gulp.src (patch.js).
-        pipe(concat()).
-        pipe(uglify()).
-        pipe(gulp.dest ('./dist/js'));
+function scripts() {
+  return gulp.src(patch.js).
+      pipe(concat('script.js')).
+      pipe(uglify()).
+      pipe(gulp.dest('./dist')).
+      pipe(browserSync.stream());
+}
+
+const distJQuery = () => {
+  return gulp.src("./node_modules/jquery/dist/jquery.min.js")
+  .pipe(gulp.dest("./dist"));
+};
 
 gulp.task ('style', style);
 
-const watch = () => {
-  gulp.watch (patch.css, style);
-};
+function image() {
+  return gulp.src('./src/img/**/*')
+  .pipe(imagemin({progressive: true}))
+  .pipe(gulp.dest('./dist/images--optimized'));
+}
 
-gulp.task ('build', gulp.series ('cleandev', gulp.parallel(style, js, images)));
-
-gulp.task ('dev', gulp.series ('build', watch));
+function watch() {
+  browserSync.init ({
+    server: {
+      baseDir: './'
+    }
+  });
+  
+  gulp.watch(patch.css, styles);
+  gulp.watch(patch.js, scripts);
+  gulp.watch('./*.html').on('change', browserSync.reload);
+}
 
 // COMPILER
 gulp.task ('sass', function () {
@@ -114,3 +134,13 @@ gulp.task('compress', function() {
   .pipe(minify())
   .pipe(gulp.dest('dist'))
 });
+
+gulp.task('copyFonts');
+gulp.task('styles', styles);
+gulp.task('scripts', scripts);
+gulp.task('distJQuery', distJQuery);
+gulp.task('image', image);
+gulp.task('del', clean);
+gulp.task('watch', watch);
+gulp.task('build', gulp.series(clean, distJQuery, gulp.parallel(styles,scripts), image));
+gulp.task('dev', gulp.series('build', 'watch'));
