@@ -1,0 +1,45 @@
+{
+  "name": "ercml-website",
+  "version": "1.0.0",
+  "description": "The Education and Research Centre for Medical Law official website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gravedodger/MedLawCentre.git"
+  },
+  "keywords": [
+    "education",
+    "research",
+    "medicine",
+    "university",
+    "ukraine",
+    "law"
+  ],
+  "author": "Sviatoslav Malyshevskyi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gravedodger/MedLawCentre/issues"
+  },
+  "homepage": "/",
+  "devDependencies": {
+    "autoprefixer": "^10.2.5",
+    "browser-sync": "^2.26.14",
+    "browserify": "^17.0.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean": "^0.4.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-minify": "^3.1.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-scss": "^1.4.0",
+    "gulp-uglify": "^3.0.2",
+    "jshint": "^2.12.0",
+    "node-sass": "^5.0.0",
+    "uglify-js-es6": "^2.8.9"
+  }
+}
