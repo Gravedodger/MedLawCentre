@@ -41,7 +41,7 @@ const distJQuery = () => {
   .pipe(gulp.dest("./dist"));
 };
 
-gulp.task ('style', style);
+gulp.task ('styles', styles);
 
 function image() {
   return gulp.src('./src/img/**/*')
@@ -92,7 +92,6 @@ gulp.task('default', ['js'], function () {
       baseDir: './'
     }
   });
-  
   gulp.watch('js/*.js', ['js-watch']);
 });
 
@@ -102,7 +101,6 @@ gulp.task('serve', function () {
       baseDir: './'
     }
   });
-  
   gulp.watch('*.html').on('change', reload);
 });
 
